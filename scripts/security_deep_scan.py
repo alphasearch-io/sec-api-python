@@ -269,7 +269,11 @@ def scan_security(root: Path | str = ".") -> list[SecurityFinding]:
     for relative_path in _candidate_paths(repo_root):
         findings.extend(_scan_forbidden_filename(relative_path))
 
-        contents = _read_text(repo_root / relative_path)
+        file_path = repo_root / relative_path
+        if not file_path.is_file():
+            continue
+
+        contents = _read_text(file_path)
         if contents is None:
             continue
 
