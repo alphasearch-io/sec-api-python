@@ -1,0 +1,22 @@
+name: Security deep scan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  security-deep-scan:
+    name: Block incident artifacts and auto-run payloads
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run security deep scan
+        run: python3 scripts/security_deep_scan.py
